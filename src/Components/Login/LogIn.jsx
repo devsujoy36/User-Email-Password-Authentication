@@ -83,7 +83,7 @@ const LogIn = () => {
             </Helmet>
             <div className="rounded-md shadow-lg my-10 border p-10 lg:w-3/12 md:w-6/12 mx-auto">
                 <form onSubmit={handleRegister} className="flex flex-col gap-5 ">
-                    <h1 className="text-4xl font-bold text-center text-emerald-600">Log In</h1>
+                    <h1 className="text-3xl font-bold text-center text-emerald-600">Log In</h1>
                     <input type="email" name="email" placeholder="Email" className="border rounded-md px-4 py-2" required />
                     <div className='flex justify-between items-center border rounded-md relative'>
                         <input type={showHidePass ? "password" : "text"} name='password' placeholder='Password' className='border  w-full rounded-md px-4 py-2' required />
