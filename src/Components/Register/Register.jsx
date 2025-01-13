@@ -73,10 +73,10 @@ const Register = () => {
       <Helmet>
         <title>UEPA | Register </title>
       </Helmet>
-      <div className='border p-10 rounded-md shadow-lg my-10'>
+      <div className='border p-10 rounded-md shadow-lg my-10  lg:w-4/12 md:w-6/12 mx-auto'>
         <form
           onSubmit={handleRegister}
-          className='flex flex-col gap-5 lg:w-4/12 md:w-6/12 mx-auto '
+          className='flex flex-col gap-5 '
         >
           <h1 className='text-4xl font-bold text-center text-emerald-600'>
             Register
@@ -89,6 +89,9 @@ const Register = () => {
             <div onClick={()=>setShowHidePass(!showHidePass)} className='absolute right-2 text-xl'>
               {showHidePass ? <BiSolidHide /> : <BiShow />}
               </div>
+          </div>
+          <div className='flex text-xs gap-1 items-center'>
+            <input type="checkbox" /><span>Accept out Terms and Conditions</span>
           </div>
 
           <input type='submit' value={'Register'} className={btnStyle} />

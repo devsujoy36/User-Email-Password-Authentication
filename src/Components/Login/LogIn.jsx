@@ -5,6 +5,7 @@ import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { BiSolidHide } from "react-icons/bi";
 import { BiShow } from "react-icons/bi";
+import { Link } from "react-router-dom";
 const LogIn = () => {
     const btnStyle = "bg-emerald-500 py-2 px-4 rounded-lg hover:bg-transparent border-2 border-transparent hover:border-black  font-semibold active:scale-95 cursor-pointer transition-all"
 
@@ -70,18 +71,22 @@ const LogIn = () => {
             <Helmet>
                 <title>UEPA | LogIn </title>
             </Helmet>
-            <div className="rounded-md shadow-lg my-10 border p-10">
-                <form onSubmit={handleRegister} className="flex flex-col gap-5 lg:w-4/12 md:w-6/12 mx-auto   ">
+            <div className="rounded-md shadow-lg my-10 border p-10 lg:w-4/12 md:w-6/12 mx-auto">
+                <form onSubmit={handleRegister} className="flex flex-col gap-5 ">
                     <h1 className="text-4xl font-bold text-center text-emerald-600">Log In</h1>
                     <input type="email" name="email" placeholder="Email" className="border rounded-md px-4 py-3" required />
                     <div className='flex justify-between items-center border rounded-md relative'>
                         <input type={showHidePass ? "password" : "text"} name='password' placeholder='Password' className='border  w-full rounded-md px-4 py-3' required />
                         <div onClick={handleShowHidePass} className='absolute right-2 text-xl'>{showHidePass ? <BiSolidHide /> : <BiShow />}</div>
                     </div>
+                    <div className='flex text-xs gap-1 justify-between items-center'>
+                        <Link className="hover:underline font-medium transition-all" to={"/register"}>Forgot password?</Link>
+                        <Link className="hover:underline font-medium transition-all" to={"/register"}>Create new Account?</Link>
+                    </div>
                     <input type="submit" value={"Log In"} className={btnStyle} />
                 </form>
                 <div>
-                <div className="mt-6 flex flex-col gap-3 justify-between">
+                    <div className="mt-6 flex flex-col gap-3 justify-between">
                         <button onClick={handleGoogleLogin} className={btnStyle} >Continue with Google </button>
                         <button type="" className={btnStyle} >Continue with Github </button>
                         <button type="" className={btnStyle} >Continue with Facebook</button>
