@@ -2,16 +2,28 @@ import { createUserWithEmailAndPassword } from 'firebase/auth'
 import auth from '../../Firebase/Firebase.config'
 import { useState } from 'react'
 import { Helmet } from 'react-helmet-async'
+import { BiSolidHide } from "react-icons/bi";
+import { BiShow } from "react-icons/bi";
 
 const Register = () => {
   const btnStyle =
     'bg-emerald-500 py-2 px-4 rounded-lg hover:bg-transparent border-2 border-transparent hover:border-black  font-semibold active:scale-95 cursor-pointer transition-all'
 
   const [user, setUser] = useState()
+  console.log(user)
   const [registerError, setRegisterError] = useState('')
   const [success, setSuccess] = useState('')
 
-  console.log(user)
+  const [showHidePass, setShowHidePass] = useState(true)
+
+  const handleShowHidePass = () => {
+    if (showHidePass === true) {
+      setShowHidePass(!showHidePass)
+    }
+    else {
+      setShowHidePass(true)
+    }
+  }
 
   const handleRegister = e => {
     e.preventDefault()
@@ -64,7 +76,11 @@ const Register = () => {
           <input type='text' name='name' placeholder='Name' className='border rounded-md px-4 py-3' required />
           <input type='email' name='email' placeholder='Email' className='border rounded-md px-4 py-3' required />
           <input type='number' name='phone' placeholder='Phone' className='border rounded-md px-4 py-3' required />
-          <input type='password' name='password' placeholder='Password' className='border rounded-md px-4 py-3' required />
+          <div className='flex justify-between items-center border rounded-md relative'>
+            <input type={showHidePass ? "password" : "text"} name='password' placeholder='Password' className='border  w-full rounded-md px-4 py-3' required />
+            <div onClick={handleShowHidePass} className='absolute right-2 text-xl'>{showHidePass ? <BiSolidHide /> : <BiShow />}</div>
+          </div>
+
           <input type='submit' value={'Register'} className={btnStyle} />
           <div className='mt-6 flex flex-col gap-3 justify-between'>
             <button type='submit' className={btnStyle}>

@@ -11,6 +11,7 @@ const HeroRegister = () => {
 
     console.log(user);
 
+    
     const handleRegister = (e) => {
         e.preventDefault()
 
