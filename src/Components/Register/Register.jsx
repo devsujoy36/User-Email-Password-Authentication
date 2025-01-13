@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { BiSolidHide } from "react-icons/bi";
 import { BiShow } from "react-icons/bi";
+import { Link } from 'react-router-dom';
 
 const Register = () => {
   const btnStyle =
@@ -91,8 +92,9 @@ const Register = () => {
               </div>
           </div>
           <div className='flex text-xs gap-1 items-center'>
-            <input type="checkbox" /><span>Accept out Terms and Conditions</span>
+            <input type="checkbox" id='accept'/><label htmlFor='accept'>Accept out Terms and Conditions</label>
           </div>
+            <Link className='text-xs hover:underline font-medium transition-all text-center' to={"/login"}>Already Have an Account?</Link>
 
           <input type='submit' value={'Register'} className={btnStyle} />
         </form>
