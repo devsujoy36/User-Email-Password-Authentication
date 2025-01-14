@@ -24,8 +24,10 @@ const LogIn = () => {
     }
 
     const handleRegister = (e) => {
+        setLogInError('')
+        setSuccess('')
         e.preventDefault()
-
+        notify("Logged in Successfuly")
 
         const email = e.target.email.value;
         const password = e.target.password.value;
