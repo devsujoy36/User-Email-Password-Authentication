@@ -11,7 +11,7 @@ const ForgottenPass = () => {
     const [loginError, setLogInError] = useState('')
     const [success, setSuccess] = useState('')
 
-    
+
 
     const handleRegister = (e) => {
         setLogInError('')
@@ -23,7 +23,7 @@ const ForgottenPass = () => {
 
         console.log(email);
 
-        
+
         setLogInError('')
         setSuccess('')
     }
@@ -41,16 +41,14 @@ const ForgottenPass = () => {
                     <h1 className="text-3xl font-bold text-center text-emerald-600">Forgotten Password</h1>
                     <input type="text" name="emailPhone" placeholder="Enter Email or Phone" className="border rounded-md px-4 py-2" required />
                     <div className='flex text-xs gap-1 justify-between items-center'>
-                        
                         <Link className="hover:underline font-medium transition-all" to={"/register"}>Create new Account?</Link>
                     </div>
-
                     <input type="submit" value={"Submit"} className={btnStyle} />
                 </form>
-                    <div className="mt-1">
-                        {loginError && <p className="text-xs text-red-500">{loginError}</p>}
-                        {success && <p className="text-xs text-emerald-500">{success}</p>}
-                    </div>
+                <div className="mt-1">
+                    {loginError && <p className="text-xs text-red-500">{loginError}</p>}
+                    {success && <p className="text-xs text-emerald-500">{success}</p>}
+                </div>
             </div>
         </div>
     )
