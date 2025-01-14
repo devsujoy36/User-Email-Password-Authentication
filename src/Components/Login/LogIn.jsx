@@ -93,6 +93,7 @@ const LogIn = () => {
                         <Link className="hover:underline font-medium transition-all" to={"/register"}>Forgot password?</Link>
                         <Link className="hover:underline font-medium transition-all" to={"/register"}>Create new Account?</Link>
                     </div>
+                    
                     <input type="submit" value={"Log In"} className={btnStyle} />
                 </form>
                 <div>
