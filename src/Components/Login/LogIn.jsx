@@ -1,25 +1,19 @@
-import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import auth from "../../Firebase/Firebase.config";
+
 import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { BiSolidHide } from "react-icons/bi";
 import { BiShow } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
+
 const LogIn = () => {
 
-    
     const btnStyle = "bg-emerald-500 py-1 rounded-lg hover:bg-transparent border-2 border-transparent hover:border-black font-semibold active:scale-95 cursor-pointer transition-all"
-    
-    const [user, setUser] = useState()
-    console.log(user);
 
     const [loginError, setLogInError] = useState('')
     const [success, setSuccess] = useState('')
-
     const [showHidePass, setShowHidePass] = useState(true)
-    
+
     const handleShowHidePass = () => {
         if (showHidePass === true) {
             setShowHidePass(!showHidePass)
@@ -28,53 +22,34 @@ const LogIn = () => {
             setShowHidePass(true)
         }
     }
-    
+
     const handleRegister = (e) => {
         e.preventDefault()
-        
-        
+
+
         const email = e.target.email.value;
         const password = e.target.password.value;
-        
+
         console.log(email, " ", password);
-        
+
         if (password.length < 6) {
-            setLogInError('Password should be at least 6 characters or longer');
-            notify(`${loginError}`)
+            setLogInError('Password should be at least 6 characters or longer')
+            return
+        }
+        else if (!/[A-Z]/.test(password)) {
+            setLogInError('Your Password should have at least one uppercase characters')
             return;
         }
-        
+        else if (!/[a-z]/.test(password)) {
+            setLogInError('Your Password should have at least one lowercase characters')
+            return;
+        }
         setLogInError('')
         setSuccess('')
-        
-        createUserWithEmailAndPassword(auth, email, password)
-        .then(res => {
-            setUser(res.user)
-            setSuccess('User Created Successfully')
-            
-        })
-        .catch(error => {
-            setLogInError(error.message);
-            console.log(error.message);
-        })
     }
-    
-    
-    const googleProvider = new GoogleAuthProvider()
-    const handleGoogleLogin = () => {
-        setLogInError('')
-        setSuccess('')
-        signInWithPopup(auth, googleProvider)
-        .then(res => {
-            setUser(res.user)
-            setSuccess('User Created Successfully')
-        })
-        .Catch(error => {
-            console.log(error);
-        })
-    }
+
     const notify = (text) => toast(text);
-    
+
     return (
         <div className="max-w-screen-2xl lg:my-20 pb-10 lg:mx-auto mx-10">
             <ToastContainer />
@@ -93,12 +68,12 @@ const LogIn = () => {
                         <Link className="hover:underline font-medium transition-all" to={"/register"}>Forgot password?</Link>
                         <Link className="hover:underline font-medium transition-all" to={"/register"}>Create new Account?</Link>
                     </div>
-                    
+
                     <input type="submit" value={"Log In"} className={btnStyle} />
                 </form>
                 <div>
                     <div className="mt-6 flex flex-col gap-3 justify-between">
-                        <button onClick={handleGoogleLogin} className={btnStyle} >Continue with Google </button>
+                        <button className={btnStyle} >Continue with Google </button>
                         <button type="" className={btnStyle} >Continue with Github </button>
                         <button type="" className={btnStyle} >Continue with Facebook</button>
                     </div>
