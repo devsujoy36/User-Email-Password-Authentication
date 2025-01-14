@@ -9,6 +9,7 @@ import Home from './Components/Home/Home.jsx'
 import ErrorPage from './Components/Errorpage/ErrorPage.jsx'
 import HeroRegister from './Components/HeroRegister/HeroRegister.jsx'
 import { HelmetProvider } from 'react-helmet-async'
+import ForgottenPass from './Components/ForgottenPass/ForgottenPass.jsx'
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
       {
         path: "/heroregister",
         element: <HeroRegister />,
+      },
+      {
+        path: "forgottenPass",
+        element: <ForgottenPass />,
       },
     ]
   }

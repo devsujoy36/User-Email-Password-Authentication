@@ -67,7 +67,7 @@ const LogIn = () => {
                         <div onClick={handleShowHidePass} className='absolute right-2 text-xl'>{showHidePass ? <BiSolidHide /> : <BiShow />}</div>
                     </div>
                     <div className='flex text-xs gap-1 justify-between items-center'>
-                        <Link className="hover:underline font-medium transition-all" to={"/register"}>Forgot password?</Link>
+                        <Link className="hover:underline font-medium transition-all" to={"/forgottenPass"}>Forgot password?</Link>
                         <Link className="hover:underline font-medium transition-all" to={"/register"}>Create new Account?</Link>
                     </div>
 
