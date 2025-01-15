@@ -2,32 +2,23 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import auth from "../../Firebase/Firebase.config";
 import { useState } from "react";
 import { Helmet } from "react-helmet-async";
-
 const HeroRegister = () => {
-
     const [user, setUser] = useState()
     const [registerError, setRegisterError] = useState('')
     const [success, setSuccess] = useState('')
-
     console.log(user);
-
-    
     const handleRegister = (e) => {
         e.preventDefault()
-
         const email = e.target.email.value;
         const password = e.target.password.value;
-
         console.log(email, " ", password);
 
         if (password.length < 6) {
             setRegisterError('Password should be at least 6 characters or longer');
             return;
         }
-
         setRegisterError('')
         setSuccess('')
-
         createUserWithEmailAndPassword(auth, email, password)
             .then(res => {
                 setUser(res.user)
