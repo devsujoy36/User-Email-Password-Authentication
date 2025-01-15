@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { BiSolidHide } from "react-icons/bi";
@@ -7,11 +6,9 @@ import { Link } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 const LogIn = () => {
     const btnStyle = "bg-emerald-500 py-1 rounded-lg hover:bg-transparent border-2 border-transparent hover:border-black font-semibold active:scale-95 cursor-pointer transition-all"
-
     const [loginError, setLogInError] = useState('')
     const [success, setSuccess] = useState('')
     const [showHidePass, setShowHidePass] = useState(true)
-
     const handleShowHidePass = () => {
         if (showHidePass === true) {
             setShowHidePass(!showHidePass)
@@ -20,18 +17,14 @@ const LogIn = () => {
             setShowHidePass(true)
         }
     }
-
     const handleRegister = (e) => {
         setLogInError('')
         setSuccess('')
         e.preventDefault()
         notify(`${success} ${loginError}`)
-
         const email = e.target.email.value;
         const password = e.target.password.value;
-
         console.log(email, " ", password);
-
         if (password.length < 6) {
             setLogInError('Password should be at least 6 characters or longer')
             return
@@ -47,9 +40,7 @@ const LogIn = () => {
         setLogInError('')
         setSuccess('')
     }
-
     const notify = (text) => toast(text);
-
     return (
         <div className="max-w-screen-2xl lg:my-20 pb-10 lg:mx-auto mx-10">
             <ToastContainer />
@@ -68,7 +59,6 @@ const LogIn = () => {
                         <Link className="hover:underline font-medium transition-all" to={"/forgottenPass"}>Forgot password?</Link>
                         <Link className="hover:underline font-medium transition-all" to={"/register"}>Create new Account?</Link>
                     </div>
-
                     <input type="submit" value={"Log In"} className={btnStyle} />
                 </form>
                 <div>
