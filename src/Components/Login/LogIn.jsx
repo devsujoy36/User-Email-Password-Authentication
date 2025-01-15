@@ -5,9 +5,7 @@ import { BiSolidHide } from "react-icons/bi";
 import { BiShow } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
-
 const LogIn = () => {
-
     const btnStyle = "bg-emerald-500 py-1 rounded-lg hover:bg-transparent border-2 border-transparent hover:border-black font-semibold active:scale-95 cursor-pointer transition-all"
 
     const [loginError, setLogInError] = useState('')

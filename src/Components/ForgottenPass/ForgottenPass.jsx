@@ -3,33 +3,21 @@ import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
-
 const ForgottenPass = () => {
-
     const btnStyle = "bg-emerald-500 py-1 rounded-lg hover:bg-transparent border-2 border-transparent hover:border-black font-semibold active:scale-95 cursor-pointer transition-all"
-
     const [loginError, setLogInError] = useState('')
     const [success, setSuccess] = useState('')
-
-
-
     const handleRegister = (e) => {
         setLogInError('')
         setSuccess('')
         e.preventDefault()
         notify("Submitted Request Successfuly")
-
         const email = e.target.emailPhone.value;
-
         console.log(email);
-
-
         setLogInError('')
         setSuccess('')
     }
-
     const notify = (text) => toast(text);
-
     return (
         <div className="max-w-screen-2xl  md:my-40 pb-10 lg:mx-auto mx-10">
             <ToastContainer />
