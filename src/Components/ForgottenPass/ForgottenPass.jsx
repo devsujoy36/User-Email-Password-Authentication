@@ -31,7 +31,7 @@ const ForgottenPass = () => {
     const notify = (text) => toast(text);
 
     return (
-        <div className="max-w-screen-2xl lg:my-20 pb-10 lg:mx-auto mx-10">
+        <div className="max-w-screen-2xl  md:my-40 pb-10 lg:mx-auto mx-10">
             <ToastContainer />
             <Helmet>
                 <title>UEPA | Forgot Pass </title>

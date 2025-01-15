@@ -28,6 +28,7 @@ const Header = () => {
               <li><NavLink to={"/"}>Home</NavLink></li>
               <li><NavLink to={"/login"}>Login</NavLink></li>
               <li><NavLink to={"/register"}>Register</NavLink></li>
+              <li><NavLink to={"/forgottenPass"}>Forgot Pass</ NavLink></li>
               <li><NavLink to={"/heroregister"}>Hero Register</NavLink></li>
             </ul>
           </div>
@@ -38,6 +39,7 @@ const Header = () => {
             <li><NavLink to={"/"}>Home</NavLink></li>
             <li><NavLink to={"/login"}>Login</NavLink></li>
             <li><NavLink to={"/register"}>Register</NavLink></li>
+            <li><NavLink to={"/forgottenPass"}>Forgot Pass</ NavLink></li>
             <li><NavLink to={"/heroregister"}>Hero Register</NavLink></li>
           </ul>
         </div>

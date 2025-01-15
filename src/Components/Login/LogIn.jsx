@@ -27,7 +27,7 @@ const LogIn = () => {
         setLogInError('')
         setSuccess('')
         e.preventDefault()
-        notify("Logged in Successfuly")
+        notify(`${success} ${loginError}`)
 
         const email = e.target.email.value;
         const password = e.target.password.value;
