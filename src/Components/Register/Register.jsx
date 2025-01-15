@@ -6,28 +6,19 @@ import { Helmet } from 'react-helmet-async'
 import { BiSolidHide } from "react-icons/bi";
 import { BiShow } from "react-icons/bi";
 import { Link } from 'react-router-dom';
-
 const Register = () => {
   const btnStyle =
     'bg-emerald-500 py-1 rounded-lg hover:bg-transparent border-2 border-transparent hover:border-black  font-semibold active:scale-95 cursor-pointer transition-all'
-
   const [user, setUser] = useState()
   console.log(user)
   const [registerError, setRegisterError] = useState('')
   const [success, setSuccess] = useState('')
-
   const [showHidePass, setShowHidePass] = useState(true)
-
- 
-
   const handleRegister = e => {
     e.preventDefault()
-
     const email = e.target.email.value
     const password = e.target.password.value
-
     console.log(email, ' ', password)
-
     if (password.length < 6) {
       setRegisterError('Password should be at least 6 characters or longer')
       return
@@ -40,10 +31,8 @@ const Register = () => {
       setRegisterError('Your Password should have at least one lowercase characters')
       return;
     }
-
     setRegisterError('')
     setSuccess('')
-
     createUserWithEmailAndPassword(auth, email, password)
       .then(res => {
         setUser(res.user)
@@ -54,7 +43,6 @@ const Register = () => {
         console.log(error.message)
       })
   }
-
   const googleProvider = new GoogleAuthProvider()
   const handleGoogleLogin = () => {
     setRegisterError('')
@@ -68,7 +56,6 @@ const Register = () => {
         console.log(error);
       })
   }
-
   return (
     <div className='max-w-screen-2xl lg:my-20 lg:mx-auto mx-10'>
       <Helmet>
@@ -95,7 +82,6 @@ const Register = () => {
             <input type="checkbox" id='accept'required/><label htmlFor='accept'>Accept out Terms and Conditions</label>
           </div>
             <Link className='text-xs hover:underline font-medium transition-all text-center' to={"/login"}>Already Have an Account?</Link>
-
           <input type='submit' value={'Register'} className={btnStyle} />
         </form>
         <div className="mt-6 flex flex-col gap-3 justify-between">
