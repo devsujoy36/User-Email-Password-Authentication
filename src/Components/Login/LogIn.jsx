@@ -9,6 +9,8 @@ import auth from "../../Firebase/Firebase.config";
 const LogIn = () => {
     const btnStyle = "bg-emerald-500 py-1 rounded-lg hover:bg-transparent border-2 border-transparent hover:border-black font-semibold active:scale-95 cursor-pointer transition-all"
     const [showHidePass, setShowHidePass] = useState(true)
+    const [registerError, setRegisterError] = useState('')
+    const [success, setSuccess] = useState('')
     const handleShowHidePass = () => {
         if (showHidePass === true) {
             setShowHidePass(!showHidePass)
@@ -23,15 +25,28 @@ const LogIn = () => {
         const email = e.target.email.value;
         const password = e.target.password.value;
         console.log(email, " ", password);
+        if (password.length < 6) {
+            setRegisterError('Password should be at least 6 characters or longer')
+            return;
+        }
+        else if (!/[A-Z]/.test(password)) {
+            setRegisterError('Your Password should have at least one uppercase characters')
+            return;
+        }
+        else if (!/[a-z]/.test(password)) {
+            setRegisterError('Your Password should have at least one lowercase characters')
+            return;
+        }
 
         signInWithEmailAndPassword(auth, email, password)
-            .then(result=>{
+            .then(result => {
                 console.log(result.user);
+
+                setSuccess('User Created Successfully')
             })
             .catch(error => {
                 console.log(error);
             })
-
     }
     const notify = (text) => toast(text);
     return (
@@ -60,7 +75,8 @@ const LogIn = () => {
                         <button type="" className={btnStyle} >Continue with Github </button>
                         <button type="" className={btnStyle} >Continue with Facebook</button>
                     </div>
-
+                    {registerError && <p className="text-xs text-red-500">{registerError}</p>}
+                    {success && <p className="text-xs text-emerald-500">{success}</p>}
                 </div>
             </div>
         </div>
