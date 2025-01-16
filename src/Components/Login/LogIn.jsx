@@ -1,9 +1,11 @@
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { BiSolidHide } from "react-icons/bi";
 import { BiShow } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
+import auth from "../../Firebase/Firebase.config";
 const LogIn = () => {
     const btnStyle = "bg-emerald-500 py-1 rounded-lg hover:bg-transparent border-2 border-transparent hover:border-black font-semibold active:scale-95 cursor-pointer transition-all"
     const [showHidePass, setShowHidePass] = useState(true)
@@ -21,7 +23,15 @@ const LogIn = () => {
         const email = e.target.email.value;
         const password = e.target.password.value;
         console.log(email, " ", password);
-        
+
+        signInWithEmailAndPassword(auth, email, password)
+            .then(result=>{
+                console.log(result.user);
+            })
+            .catch(error => {
+                console.log(error);
+            })
+
     }
     const notify = (text) => toast(text);
     return (
@@ -50,7 +60,7 @@ const LogIn = () => {
                         <button type="" className={btnStyle} >Continue with Github </button>
                         <button type="" className={btnStyle} >Continue with Facebook</button>
                     </div>
-                    
+
                 </div>
             </div>
         </div>
