@@ -1,39 +1,52 @@
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import auth from "../../Firebase/Firebase.config";
 import { useState } from "react";
 import { Helmet } from "react-helmet-async";
+import { toast, ToastContainer } from "react-toastify";
+
 const HeroRegister = () => {
+
     const [user, setUser] = useState()
-    const [registerError, setRegisterError] = useState('')
-    const [success, setSuccess] = useState('')
     console.log(user);
+    const [loginError, setLogInError] = useState('')
+    const [success, setSuccess] = useState('')
+
+    
     const handleRegister = (e) => {
+        setLogInError('')
+        setSuccess('')
         e.preventDefault()
+        
         const email = e.target.email.value;
         const password = e.target.password.value;
         console.log(email, " ", password);
-
+        
         if (password.length < 6) {
-            setRegisterError('Password should be at least 6 characters or longer');
+            setLogInError('Password should be at least 6 characters or longer');
             return;
         }
-        setRegisterError('')
-        setSuccess('')
-        createUserWithEmailAndPassword(auth, email, password)
-            .then(res => {
-                setUser(res.user)
-                setSuccess('User Created Successfully')
-            })
-            .catch(error => {
-                setRegisterError(error.message);
+        
+        signInWithEmailAndPassword(auth, email, password)
+        .then(res => {
+            setUser(res.user)
+            setSuccess('User Logged in Successfully')
+            notify(`${email},User Logged in Successfully`)
+        })
+        .catch(error => {
+            notify(error.message)
+            setLogInError(error.message);
                 console.log(error.message);
             })
-    }
-    return (
+        }
+        
+        const notify = (text) => toast(text);
+        
+        return (
         <div className="lg:px-0 px-10 bg-white border-2">
             <Helmet>
                 <title>UEPA | Hero Register </title>
             </Helmet>
+            <ToastContainer />
             <div className="hero  min-h-[80vh] ">
                 <div className=" flex flex-col md:flex-row justify-between items-center">
                     <div className="text-center lg:text-left">
@@ -63,7 +76,7 @@ const HeroRegister = () => {
                             <div className="form-control mt-6">
                                 <button className="btn btn-primary">Login</button>
                             </div>
-                            {registerError && <p className="text-xs text-red-500">{registerError}</p>}
+                            {loginError && <p className="text-xs text-red-500">{loginError}</p>}
                             {success && <p className="text-xs text-emerald-500">{success}</p>}
                         </form>
                     </div>
