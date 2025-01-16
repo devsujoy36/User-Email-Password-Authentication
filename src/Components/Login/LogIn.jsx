@@ -8,12 +8,8 @@ const LogIn = () => {
     const btnStyle = "bg-emerald-500 py-1 rounded-lg hover:bg-transparent border-2 border-transparent hover:border-black font-semibold active:scale-95 cursor-pointer transition-all"
     const [showHidePass, setShowHidePass] = useState(true)
     const handleShowHidePass = () => {
-        if (showHidePass === true) {
-            setShowHidePass(!showHidePass)
-        }
-        else {
-            setShowHidePass(true)
-        }
+        if (showHidePass === true) {setShowHidePass(!showHidePass}
+        else {setShowHidePass(true)}
     }
     const handleRegister = (e) => {
         notify("Login Succesfull")
