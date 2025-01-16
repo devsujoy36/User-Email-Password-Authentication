@@ -12,12 +12,8 @@ const LogIn = () => {
     const [registerError, setRegisterError] = useState('')
     const [success, setSuccess] = useState('')
     const handleShowHidePass = () => {
-        if (showHidePass === true) {
-            setShowHidePass(!showHidePass)
-        }
-        else {
-            setShowHidePass(true)
-        }
+        if (showHidePass === true) {setShowHidePass(!showHidePass}
+        else {setShowHidePass(true)}
     }
     const handleRegister = (e) => {
         notify("Login Succesfull")
