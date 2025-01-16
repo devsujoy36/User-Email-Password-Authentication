@@ -6,8 +6,6 @@ import { Link } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 const LogIn = () => {
     const btnStyle = "bg-emerald-500 py-1 rounded-lg hover:bg-transparent border-2 border-transparent hover:border-black font-semibold active:scale-95 cursor-pointer transition-all"
-    const [loginError, setLogInError] = useState('')
-    const [success, setSuccess] = useState('')
     const [showHidePass, setShowHidePass] = useState(true)
     const handleShowHidePass = () => {
         if (showHidePass === true) {
@@ -18,27 +16,12 @@ const LogIn = () => {
         }
     }
     const handleRegister = (e) => {
-        setLogInError('')
-        setSuccess('')
+        notify("Login Succesfull")
         e.preventDefault()
-        notify(`${success} ${loginError}`)
         const email = e.target.email.value;
         const password = e.target.password.value;
         console.log(email, " ", password);
-        if (password.length < 6) {
-            setLogInError('Password should be at least 6 characters or longer')
-            return
-        }
-        else if (!/[A-Z]/.test(password)) {
-            setLogInError('Your Password should have at least one uppercase characters')
-            return;
-        }
-        else if (!/[a-z]/.test(password)) {
-            setLogInError('Your Password should have at least one lowercase characters')
-            return;
-        }
-        setLogInError('')
-        setSuccess('')
+        
     }
     const notify = (text) => toast(text);
     return (
@@ -67,10 +50,7 @@ const LogIn = () => {
                         <button type="" className={btnStyle} >Continue with Github </button>
                         <button type="" className={btnStyle} >Continue with Facebook</button>
                     </div>
-                    <div className="mt-1">
-                        {loginError && <p className="text-xs text-red-500">{loginError}</p>}
-                        {success && <p className="text-xs text-emerald-500">{success}</p>}
-                    </div>
+                    
                 </div>
             </div>
         </div>
