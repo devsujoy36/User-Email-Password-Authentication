@@ -58,26 +58,30 @@ const LogIn = () => {
                 setLoginError(error.message)
                 notify(error.message)
             })
-        }
-        
-        const handleForgotPassword = () => {
-            const email = emailRef.current.value;
-            console.log(email);
-            if (!email) {
+    }
+
+    const handleForgotPassword = () => {
+        const email = emailRef.current.value;
+        console.log(email);
+        if (!email) {
             console.log("Please provide a valid email", email);
+            setLoginError("Please provide a valid email", email);
             return;
         }
         else if (!emailRegex.test(email)) {
             console.log('Please Write a valid email');
+            setLoginError('Please Write a valid email')
+            return;
         }
+
         notify(`Check your inbox on ${email}`)
-        setLoginError(`Check your inbox on ${email}`)
-        
+
         sendPasswordResetEmail(auth, email)
-        .then(res => {
-            console.log(res.user);
+            .then(res => {
+                console.log(res.user);
             })
             .catch(error => {
+                setLoginError(`Check your inbox on ${email}`)
                 console.log(error);
 
             })
