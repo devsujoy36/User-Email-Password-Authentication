@@ -13,7 +13,7 @@ const LogIn = () => {
     const btnStyle = "bg-emerald-500 py-1 rounded-lg hover:bg-transparent border-2 border-transparent hover:border-black font-semibold active:scale-95 cursor-pointer transition-all"
     const [showHidePass, setShowHidePass] = useState(true)
     const [user, setUser] = useState()
-    const [registerError, setRegisterError] = useState('')
+    const [logInError, setLoginError] = useState('')
     const [success, setSuccess] = useState('')
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
@@ -22,27 +22,29 @@ const LogIn = () => {
     const emailRef = useRef(null)
 
     const handleShowHidePass = () => {
-        if (showHidePass === true) { setShowHidePass(!showHidePass) }
+        if (showHidePass === true) {
+            setShowHidePass(!showHidePass)
+        }
         else { setShowHidePass(true) }
     }
 
-    const handleRegister = (e) => {
-        notify("Login Succesfull")
+    const handleLogin = (e) => {
         e.preventDefault()
         const email = e.target.email.value;
         const password = e.target.password.value;
         console.log(email, " ", password);
-
+        setSuccess("")
+        setLoginError("")
         if (password.length < 6) {
-            setRegisterError('Password should be at least 6 characters or longer')
+            setLoginError('Password should be at least 6 characters or longer')
             return;
         }
         else if (!/[A-Z]/.test(password)) {
-            setRegisterError('Your Password should have at least one uppercase characters')
+            setLoginError('Your Password should have at least one uppercase characters')
             return;
         }
         else if (!/[a-z]/.test(password)) {
-            setRegisterError('Your Password should have at least one lowercase characters')
+            setLoginError('Your Password should have at least one lowercase characters')
             return;
         }
         signInWithEmailAndPassword(auth, email, password)
@@ -53,30 +55,33 @@ const LogIn = () => {
             })
             .catch(error => {
                 console.log(error);
+                setLoginError(error.message)
+                notify(error.message)
             })
-    }
-
-    const handleForgotPassword = () => {
-        const email = emailRef.current.value;
-        console.log(email);
-        if (!email) {
+        }
+        
+        const handleForgotPassword = () => {
+            const email = emailRef.current.value;
+            console.log(email);
+            if (!email) {
             console.log("Please provide a valid email", email);
             return;
         }
         else if (!emailRegex.test(email)) {
-            console.log('Please provide a valid email');
+            console.log('Please Write a valid email');
         }
-
+        notify(`Check your inbox on ${email}`)
+        setLoginError(`Check your inbox on ${email}`)
+        
         sendPasswordResetEmail(auth, email)
-        .then(res=>{
+        .then(res => {
             console.log(res.user);
-        })
-        .catch(error=>{
-            console.log(error);
-        })
+            })
+            .catch(error => {
+                console.log(error);
 
+            })
     }
-
 
     return (
         <div className="max-w-screen-2xl lg:my-20 pb-10 lg:mx-auto mx-10">
@@ -84,8 +89,8 @@ const LogIn = () => {
             <Helmet>
                 <title>UEPA | LogIn </title>
             </Helmet>
-            <div className="rounded-md shadow-lg my-10 border p-10 lg:w-3/12 md:w-6/12 mx-auto">
-                <form onSubmit={handleRegister} className="flex flex-col gap-5 ">
+            <div className="rounded-md shadow-lg lg:my-10 my-20 border p-10 lg:w-3/12 md:w-6/12 mx-auto">
+                <form onSubmit={handleLogin} className="flex flex-col gap-5 ">
                     <h1 className="text-3xl font-bold text-center text-emerald-600">Log In</h1>
                     <input type="email" ref={emailRef} name="email" placeholder="Email" className="border rounded-md px-4 py-2" required />
                     <div className='flex justify-between items-center border rounded-md relative'>
@@ -100,12 +105,12 @@ const LogIn = () => {
                     <input type="submit" value={"Log In"} className={btnStyle} />
                 </form>
                 <div>
-                    <div className="mt-6 flex flex-col gap-3 justify-between">
+                    {/* <div className="mt-6 flex flex-col gap-3 justify-between">
                         <button className={btnStyle} >Continue with Google </button>
                         <button type="" className={btnStyle} >Continue with Github </button>
                         <button type="" className={btnStyle} >Continue with Facebook</button>
-                    </div>
-                    {registerError && <p className="text-xs text-red-500">{registerError}</p>}
+                    </div> */}
+                    {logInError && <p className="text-xs text-red-500">{logInError}</p>}
                     {success && <p className="text-xs text-emerald-500">{success}</p>}
                 </div>
             </div>
