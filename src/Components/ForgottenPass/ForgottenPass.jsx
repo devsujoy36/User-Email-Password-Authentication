@@ -18,14 +18,10 @@ const ForgottenPass = () => {
 
         const email = emailRef.current.value;
         console.log(email);
-        if (!email) {
+        if (!email && !emailRegex.test(email)) {
             console.log("Please provide a valid email", email);
+            notify("Please provide a valid email")
             setLoginError("Please provide a valid email", email);
-            return;
-        }
-        else if (!emailRegex.test(email)) {
-            console.log('Please Write a valid email');
-            setLoginError('Please Write a valid email')
             return;
         }
 

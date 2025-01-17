@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword } from 'firebase/auth'
+import { createUserWithEmailAndPassword, sendEmailVerification, updateProfile } from 'firebase/auth'
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import auth from '../../Firebase/Firebase.config'
 import { useState } from 'react'
@@ -6,19 +6,34 @@ import { Helmet } from 'react-helmet-async'
 import { BiSolidHide } from "react-icons/bi";
 import { BiShow } from "react-icons/bi";
 import { Link } from 'react-router-dom';
+
 const Register = () => {
-  const btnStyle =
-    'bg-emerald-500 py-1 rounded-lg hover:bg-transparent border-2 border-transparent hover:border-black  font-semibold active:scale-95 cursor-pointer transition-all'
+  const btnStyle = 'bg-emerald-500 py-1 rounded-lg hover:bg-transparent border-2 border-transparent hover:border-black  font-semibold active:scale-95 cursor-pointer transition-all'
+
   const [user, setUser] = useState()
-  console.log(user)
-  const [registerError, setRegisterError] = useState('')
   const [success, setSuccess] = useState('')
+  const [registerError, setRegisterError] = useState('') 
   const [showHidePass, setShowHidePass] = useState(true)
+
+  console.log(user)
+
+  const handleShowHidePass = () => {
+    if (showHidePass === true) {
+      setShowHidePass(!showHidePass)
+    }
+    else { setShowHidePass(true) }
+  }
+
   const handleRegister = e => {
     e.preventDefault()
-    const email = e.target.email.value
-    const password = e.target.password.value
-    console.log(email, ' ', password)
+
+    const name = e.target.name.value;
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+    console.log(name, email, password)
+    setRegisterError('')
+    setSuccess('')
+    
     if (password.length < 6) {
       setRegisterError('Password should be at least 6 characters or longer')
       return
@@ -31,18 +46,45 @@ const Register = () => {
       setRegisterError('Your Password should have at least one lowercase characters')
       return;
     }
-    setRegisterError('')
-    setSuccess('')
+
+
+
     createUserWithEmailAndPassword(auth, email, password)
-      .then(res => {
-        setUser(res.user)
-        setSuccess('User Created Successfully')
+      .then(result => {
+        setUser(result.user)
+        //update profile
+        updateProfile(result.user, {
+          displayName: name,
+          photoURL: 'https://images.rawpixel.com/image_png_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIyLTA4L2pvYjEwMzQtZWxlbWVudC0wNi0zOTcucG5n.png'
+        })
+        .then(()=>{
+          console.log('profile updated');
+        })
+        .catch((error)=>{
+          console.log(error.message);
+        })
+
+
+
+        //cheaking email verification
+        if (result.user.emailVerified) {
+          setSuccess('User Created Successfully')
+        }
+        else {
+          setRegisterError('Please Verify your email address')
+        }
+        //send verification
+        sendEmailVerification(result.user)
+          .then(() => {
+            console.log('Please Check your email and verify your account');
+          })
       })
       .catch(error => {
         setRegisterError(error.message)
         console.log(error.message)
       })
   }
+
   const googleProvider = new GoogleAuthProvider()
   const handleGoogleLogin = () => {
     setRegisterError('')
@@ -73,15 +115,15 @@ const Register = () => {
           <input type='email' name='email' placeholder='Email' className='border rounded-md px-4 py-2' required />
           <div className='flex justify-between items-center border rounded-md relative'>
             <input type={showHidePass ? "password" : "text"} name='password' placeholder='Password' className='border  w-full rounded-md px-4 py-2' required />
-            <div onClick={()=>setShowHidePass(!showHidePass)} className='absolute right-2 text-xl'>
+            <div onClick={handleShowHidePass} className='absolute right-2 text-xl'>
               {showHidePass ? <BiSolidHide /> : <BiShow />}
-              </div>
+            </div>
           </div>
-          <input type='number' name='phone' placeholder='Phone' className='border rounded-md px-4 py-2' required />
+          {/* <input type='number' name='phone' placeholder='Phone' className='border rounded-md px-4 py-2' required /> */}
           <div className='flex text-xs gap-1 items-center'>
-            <input type="checkbox" id='accept'required/><label htmlFor='accept'>Accept out Terms and Conditions</label>
+            <input type="checkbox" id='accept' required /><label htmlFor='accept'>Accept out Terms and Conditions</label>
           </div>
-            <Link className='text-xs hover:underline font-medium transition-all text-center' to={"/login"}>Already Have an Account?</Link>
+          <Link className='text-xs hover:underline font-medium transition-all text-center' to={"/login"}>Already Have an Account?</Link>
           <input type='submit' value={'Register'} className={btnStyle} />
         </form>
         <div className="mt-6 flex flex-col gap-3 justify-between">

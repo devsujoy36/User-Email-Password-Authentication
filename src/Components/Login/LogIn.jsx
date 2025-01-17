@@ -11,15 +11,15 @@ const LogIn = () => {
     const notify = (text) => toast(text);
 
     const btnStyle = "bg-emerald-500 py-1 rounded-lg hover:bg-transparent border-2 border-transparent hover:border-black font-semibold active:scale-95 cursor-pointer transition-all"
-    const [showHidePass, setShowHidePass] = useState(true)
-    const [user, setUser] = useState()
-    const [logInError, setLoginError] = useState('')
-    const [success, setSuccess] = useState('')
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
-    console.log(user);
-
     const emailRef = useRef(null)
+    const [user, setUser] = useState()
+    const [success, setSuccess] = useState('')
+    const [logInError, setLoginError] = useState('')
+    const [showHidePass, setShowHidePass] = useState(true)
+
+    console.log(user);
 
     const handleShowHidePass = () => {
         if (showHidePass === true) {
@@ -32,7 +32,6 @@ const LogIn = () => {
         e.preventDefault()
         const email = e.target.email.value;
         const password = e.target.password.value;
-        console.log(email, " ", password);
         setSuccess("")
         setLoginError("")
         if (password.length < 6) {
@@ -50,8 +49,14 @@ const LogIn = () => {
         signInWithEmailAndPassword(auth, email, password)
             .then(result => {
                 setUser(result.user);
-                notify(`${email},User Logged in Successfully`)
-                setSuccess('User Created Successfully')
+                if (!result.user.emailVerified) {
+                    notify(`${email},User Logged in Successfully`)
+                    setSuccess('User Created Successfully')
+                }
+                else{
+                    notify(`Please Verify your email address ${email}`)
+                    setLoginError('Please Verify your email address')
+                }
             })
             .catch(error => {
                 console.log(error);
@@ -63,14 +68,10 @@ const LogIn = () => {
     const handleForgotPassword = () => {
         const email = emailRef.current.value;
         console.log(email);
-        if (!email) {
+        if (!email && !emailRegex.test(email)) {
             console.log("Please provide a valid email", email);
+            notify("Please provide a valid email")
             setLoginError("Please provide a valid email", email);
-            return;
-        }
-        else if (!emailRegex.test(email)) {
-            console.log('Please Write a valid email');
-            setLoginError('Please Write a valid email')
             return;
         }
 
@@ -83,7 +84,6 @@ const LogIn = () => {
             .catch(error => {
                 setLoginError(`Check your inbox on ${email}`)
                 console.log(error);
-
             })
     }
 
